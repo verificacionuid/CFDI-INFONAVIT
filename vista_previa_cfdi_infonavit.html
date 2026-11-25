@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFDI INFONAVIT</title>
+<style>
+  @page {
+    size: letter portrait;
+    margin: 12mm 14mm;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    background: #e5e7eb;
+    padding: 20px 10px;
+  }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 9.5pt;
+    color: #000;
+    background: #fff;
+    width: 100%;
+    max-width: 816px;
+    min-height: 1056px;
+    margin: 0 auto;
+    padding: 36px 42px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  }
+  /* Header */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .logo-box {
+    width: 115px;
+    height: 92px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #ccc;
+    color: #888;
+    font-family: Arial, sans-serif;
+    font-size: 8pt;
+    text-align: center;
+  }
+  .logo-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .header-info {
+    flex: 1;
+    text-align: center;
+    padding-top: 2px;
+    padding-right: 40px;
+  }
+  .header-info .inst-name {
+    font-size: 11.5pt;
+    font-weight: normal;
+    letter-spacing: 0.2px;
+    margin-bottom: 3px;
+  }
+  .header-info .inst-detail {
+    font-size: 9.5pt;
+    line-height: 1.3;
+  }
+
+  /* Metadata Grid */
+  .meta-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 9pt;
+    line-height: 1.38;
+  }
+  .meta-col-left {
+    width: 48%;
+  }
+  .meta-col-right {
+    width: 50%;
+  }
+  .meta-row {
+    display: flex;
+    margin-bottom: 1px;
+  }
+  .meta-label {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 6px;
+    flex-shrink: 0;
+  }
+  .meta-col-left .meta-label {
+    width: 165px;
+  }
+  .meta-col-right .meta-label {
+    width: 175px;
+  }
+  .meta-value {
+    flex: 1;
+    word-break: break-word;
+  }
+
+  /* Receptor Section */
+  .receptor-section {
+    margin-bottom: 16px;
+    font-size: 9pt;
+    line-height: 1.38;
+  }
+  .receptor-section .meta-label {
+    width: 165px;
+  }
+
+  /* Periodo / Folio Row */
+  .period-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 28px;
+    margin-bottom: 3px;
+    font-size: 9pt;
+  }
+  .period-row span strong {
+    font-weight: bold;
+  }
+
+  /* Main Table */
+  table.cfdi-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    margin-bottom: 10px;
+  }
+  table.cfdi-table th,
+  table.cfdi-table td {
+    border: 1px solid #000;
+    padding: 3px 6px;
+  }
+  table.cfdi-table th {
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.15;
+    padding: 4px 6px;
+  }
+  .col-unidad { width: 11%; text-align: center; }
+  .col-prod { width: 18%; text-align: center; }
+  .col-desc { width: 35%; text-align: center; }
+  .col-cant { width: 11%; text-align: center; }
+  .col-pu { width: 12.5%; text-align: right; }
+  .col-imp { width: 12.5%; text-align: right; }
+
+  td.desc-cell {
+    text-align: center;
+  }
+  td.num-cell {
+    text-align: right;
+  }
+  td.center-cell {
+    text-align: center;
+  }
+
+  /* Empty spacer row inside table */
+  tr.spacer-row td {
+    height: 185px;
+    vertical-align: top;
+  }
+
+  /* Totals & Footer rows in table */
+  .total-label-cell {
+    text-align: right;
+    padding-right: 8px;
+  }
+  .sub-table-row td {
+    padding: 3px 6px;
+  }
+
+  /* Sellos & Cadena Original */
+  .seals-section {
+    font-size: 7.2pt;
+    line-height: 1.28;
+    margin-top: 8px;
+  }
+  .seal-title {
+    font-size: 9pt;
+    font-weight: bold;
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+  .seal-text {
+    font-family: "Times New Roman", Times, serif;
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+  .cadena-box {
+    margin-top: 4px;
+    padding-left: 115px;
+  }
+
+  @media print {
+    html {
+      background: #fff;
+      padding: 0;
+    }
+    body {
+      padding: 0;
+      max-width: none;
+      min-height: auto;
+      box-shadow: none;
+    }
+    .logo-box {
+      border: none;
+    }
+    .logo-box span {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Encabezado con espacio reservado para Logo INFONAVIT -->
+  <div class="header">
+    <div class="logo-box" id="logo-infonavit">
+      <span>LOGO<br>INFONAVIT</span>
+    </div>
+    <div class="header-info">
+      <div class="inst-name">INSTITUTO DEL FONDO NACIONAL DE LA VIVIENDA PARA LOS TRABAJADORES</div>
+      <div class="inst-detail">Av. Plan de Ayala 825, Col. Teopanzolco, C.P. 62350, Cuernavaca, Morelos..</div>
+      <div class="inst-detail">RFC: INF7205011ZA</div>
+    </div>
+  </div>
+
+  <!-- Datos del Comprobante -->
+  <div class="meta-section">
+    <div class="meta-col-left">
+      <div class="meta-row">
+        <div class="meta-label">CFDI Version:</div>
+        <div class="meta-value">3.3</div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-label">No. Certificado SAT:</div>
+        <div class="meta-value">[00000000000000000000]</div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-label">No. Certificado Emisor:</div>
+        <div class="meta-value">[00000000000000000000]</div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-label">Régimen fiscal:</div>
+        <div class="meta-value">603 Persona física</div>
+      </div>
+    </div>
+
+    <div class="meta-col-right">
+      <div class="meta-row">
+        <div class="meta-label">Tipo de Comprobante:</div>
+        <div class="meta-value">I INGRESOS</div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-label">Lugar, Fecha y hora de Emisión:</div>
+        <div class="meta-value">Cuernavaca, Mor.,<br>2026-11-20: 09:57</div>
+      </div>
+      <div class="meta-row">
+        <div class="meta-label">UUID:</div>
+        <div class="meta-value">[XXXXXXXX-XXXX-XXXX-XXXX-<br>XXXXXXXXXXXX]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Datos del Receptor -->
+  <div class="receptor-section">
+    <div class="meta-row">
+      <div class="meta-label">RFC Receptor:</div>
+      <div class="meta-value">INF7205011ZA</div>
+    </div>
+    <div class="meta-row">
+      <div class="meta-label">NRP:</div>
+      <div class="meta-value">LOJJ880526</div>
+    </div>
+    <div class="meta-row">
+      <div class="meta-label">Nombre o Razón Social:</div>
+      <div class="meta-value">JORGE LOZANO JAIMES</div>
+    </div>
+    <div class="meta-row">
+      <div class="meta-label">Uso CFDI:</div>
+      <div class="meta-value">P01</div>
+    </div>
+  </div>
+
+  <!-- Fila de Ejercicio, Periodo, Folio SUA, Fecha de Pago -->
+  <div class="period-row">
+    <span><strong>Ejercicio:</strong> 2026</span>
+    <span><strong>Periodo:</strong> 1801</span>
+    <span><strong>Folio SUA:</strong> [000000]</span>
+    <span><strong>Fecha de Pago:</strong> 23.11.2026</span>
+  </div>
+
+  <!-- Tabla de Conceptos y Totales -->
+  <table class="cfdi-table">
+    <thead>
+      <tr>
+        <th class="col-unidad">Unidad de<br>Medida</th>
+        <th class="col-prod">Productos y Servicios</th>
+        <th class="col-desc">Descripción</th>
+        <th class="col-cant">Cantidad</th>
+        <th class="col-pu">Precio Unitario</th>
+        <th class="col-imp">Importe</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="center-cell">XNA</td>
+        <td class="center-cell">01010101</td>
+        <td class="desc-cell">pago de comisión de departamento</td>
+        <td class="center-cell">1</td>
+        <td class="num-cell">66,645.98</td>
+        <td class="num-cell">66,645.98</td>
+      </tr>
+      <tr>
+        <td class="center-cell">XNA</td>
+        <td class="center-cell">01010101</td>
+        <td class="desc-cell">pago de comisión de departamento</td>
+        <td class="center-cell">1</td>
+        <td class="num-cell">1,354.02</td>
+        <td class="num-cell">1,354.02</td>
+      </tr>
+      <tr class="spacer-row">
+        <td colspan="6"></td>
+      </tr>
+      <tr class="sub-table-row">
+        <td colspan="5" class="total-label-cell">Subtotal</td>
+        <td class="num-cell">68,000.00</td>
+      </tr>
+      <tr class="sub-table-row">
+        <td colspan="5" class="total-label-cell">Total</td>
+        <td class="num-cell">68,000.00</td>
+      </tr>
+      <tr class="sub-table-row">
+        <td colspan="2" class="center-cell"><strong>Moneda:</strong> MXN</td>
+        <td class="center-cell"><strong>Total con Letra</strong></td>
+        <td colspan="3" style="padding-left: 8px;">SESENTA Y OCHO MIL / 00</td>
+      </tr>
+      <tr class="sub-table-row">
+        <td colspan="4" style="padding-left: 28px;"><strong>Forma de Pago:</strong> &nbsp;03 EFECTIVO VENTANILLA INFONAVIT</td>
+        <td class="total-label-cell"><strong>Método de Pago:</strong></td>
+        <td style="padding-left: 6px;">PUE</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Sellos Digitales y Cadena Original (sin QR) -->
+  <div class="seals-section">
+    <div class="seal-title">Sello Digital del CFDI</div>
+    <div class="seal-text">
+      fKY1S+blWPwjl/J4XU62Qac9SP+8Q5Mpr4+4wX38LEX+CvT5wagQIgCE8XM/I1ea3H4mP0bMDd5HyVKXpHP4vYZTwWCsbnShlgiUO4465vPfd+sGTaQ8AS/ZIdWUNGBABC86mTPXecNzeG7jHY4wXMEPebkU7Gy4cl94bG46kv115PeU8dTfl2NFwzvRa+cniJ71TBUpeGvyx1/5PxeLwVihgwEZ7ET8c4ceMCRdUPP8OeU/SSpycP1aehaA9eJYfIKY5BytdUqI5462ueyacVWz53eivZjc89pmXXLad8fSLzxkqORTCPC8kQo==
+    </div>
+
+    <div class="seal-title">Sello del SAT</div>
+    <div class="seal-text">
+      HkmSmQu+l9+59aJ5z3yH6a8d/Y/BSZYkvWa+5ch43AowgDvIx2CC2H4PNyUBawuq3HmzhZPNNces4vV/A/n8PhuG08bSGMYK2calGvJ2N+3a3quADx6mWPbKLH3jyZi2mDU3taxfmM2byYaI1eNE2x80+UetQED8kSfz8m5O8KEzAJ+3x0H79y8MYCshzH5Ndiq+5dclo9NnlW9yJmEca6fU9830/LxPWbUWOX+XOBbm6A5U2SyDxd/ww8P7cUMY/jwmiaCqttQ6vdn2X65Y/sktvbc+H8Dedf2bwH3GPg4lc5XQcBB/gg6LUwNp/pC9r51rQuQo==
+    </div>
+
+    <div class="seal-title">Cadena Original del Timbre Fiscal Digital del SAT</div>
+    <div class="cadena-box">
+      <div class="seal-text">
+        ||1.0|EF840213A-6808-4D91-95CC-7DCBD7CC2C29|fKY1S+blWPwjl/J4XU62Qac9SP+8Q5Mpr4+4wX38LEX+CvT5wagQIgCE8XM/I1ea3H4mP0b<br>
+        MDd5HyVKXpHP4vYZTwWCsbnShlgiUO4465vPfd+sGTaQ8AS/ZIdWUNGBABC86mTPXecNzeG7jHY4wXMEPebkU7Gy4cl94bG46kv115PeU8d<br>
+        Tfl2NFwzvRa+cniJ71TBUpeGvyx1/5PxeLwVihgwEZ7ET8c4ceMCRdUPP8OeU/SSpycP1aehaA9eJYfIKY5BytdUqI5462ueyacVWz53eivZjc8<br>
+        9pmXXLad8fSLzxkqORTCPC8kQo==|00001000000403258748||
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
