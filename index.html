@@ -14,10 +14,6 @@
     margin: 0;
     padding: 0;
   }
-  html {
-    background: #e5e7eb;
-    padding: 20px 10px;
-  }
   body {
     font-family: "Times New Roman", Times, serif;
     font-size: 9.5pt;
@@ -25,10 +21,8 @@
     background: #fff;
     width: 100%;
     max-width: 816px;
-    min-height: 1056px;
     margin: 0 auto;
-    padding: 36px 42px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    padding: 20px 28px;
   }
   /* Header */
   .header {
@@ -43,11 +37,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px dashed #ccc;
-    color: #888;
-    font-family: Arial, sans-serif;
-    font-size: 8pt;
-    text-align: center;
   }
   .logo-box img {
     max-width: 100%;
@@ -202,32 +191,20 @@
   }
 
   @media print {
-    html {
-      background: #fff;
-      padding: 0;
-    }
     body {
       padding: 0;
       max-width: none;
-      min-height: auto;
-      box-shadow: none;
-    }
-    .logo-box {
-      border: none;
-    }
-    .logo-box span {
-      display: none;
     }
   }
 </style>
 </head>
 <body>
 
-  <!-- Encabezado con espacio reservado para Logo INFONAVIT -->
+  <!-- Encabezado con Logo INFONAVIT -->
   <div class="header">
     <div class="logo-box" id="logo-infonavit">
-  <img src="logo_infonavit.jpeg" alt="INFONAVIT">
-</div>
+      <img src="logo_infonavit.jpeg" alt="INFONAVIT">
+    </div>
     <div class="header-info">
       <div class="inst-name">INSTITUTO DEL FONDO NACIONAL DE LA VIVIENDA PARA LOS TRABAJADORES</div>
       <div class="inst-detail">Av. Plan de Ayala 825, Col. Teopanzolco, C.P. 62350, Cuernavaca, Morelos..</div>
