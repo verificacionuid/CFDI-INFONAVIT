@@ -24,11 +24,13 @@
     margin: 0 auto;
     padding: 20px 28px;
   }
+
   /* Header */
   .header {
     display: flex;
     align-items: flex-start;
     margin-bottom: 14px;
+    gap: 12px;
   }
   .logo-box {
     width: 115px;
@@ -67,6 +69,7 @@
     margin-bottom: 12px;
     font-size: 9pt;
     line-height: 1.38;
+    gap: 10px;
   }
   .meta-col-left {
     width: 48%;
@@ -76,7 +79,7 @@
   }
   .meta-row {
     display: flex;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
   }
   .meta-label {
     font-weight: bold;
@@ -109,12 +112,22 @@
   .period-row {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
     padding: 0 28px;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     font-size: 9pt;
   }
   .period-row span strong {
     font-weight: bold;
+  }
+
+  /* Contenedor responsivo para la tabla en móvil */
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 10px;
   }
 
   /* Main Table */
@@ -122,7 +135,6 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 9pt;
-    margin-bottom: 10px;
   }
   table.cfdi-table th,
   table.cfdi-table td {
@@ -167,6 +179,9 @@
   .sub-table-row td {
     padding: 3px 6px;
   }
+  .forma-pago-cell {
+    padding-left: 28px;
+  }
 
   /* Sellos & Cadena Original */
   .seals-section {
@@ -190,10 +205,82 @@
     padding-left: 115px;
   }
 
+  /* =========================================
+     ADAPTACIÓN PARA TELÉFONOS MÓVILES
+     ========================================= */
+  @media screen and (max-width: 680px) {
+    body {
+      padding: 14px 12px;
+      font-size: 9pt;
+    }
+
+    /* Encabezado apilado y centrado */
+    .header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .logo-box {
+      width: 105px;
+      height: 80px;
+    }
+    .header-info {
+      padding-right: 0;
+    }
+    .header-info .inst-name {
+      font-size: 10.5pt;
+    }
+
+    /* Columnas de metadatos en una sola columna */
+    .meta-section {
+      flex-direction: column;
+      gap: 6px;
+    }
+    .meta-col-left,
+    .meta-col-right {
+      width: 100%;
+    }
+    .meta-col-left .meta-label,
+    .meta-col-right .meta-label,
+    .receptor-section .meta-label {
+      width: 145px;
+      text-align: left;
+    }
+
+    /* Fila de periodo ajustada */
+    .period-row {
+      padding: 0 4px;
+      justify-content: flex-start;
+      gap: 10px 16px;
+    }
+
+    /* Tabla deslizable horizontalmente sin aplastar texto */
+    table.cfdi-table {
+      min-width: 560px;
+    }
+    tr.spacer-row td {
+      height: 60px;
+    }
+    .forma-pago-cell {
+      padding-left: 8px;
+    }
+
+    /* Cadena original alineada a la izquierda en móvil */
+    .cadena-box {
+      padding-left: 0;
+    }
+  }
+
+  /* =========================================
+     MANTENER DISEÑO EXACTO AL IMPRIMIR / PDF
+     ========================================= */
   @media print {
     body {
       padding: 0;
       max-width: none;
+    }
+    .table-wrapper {
+      overflow: visible;
     }
   }
 </style>
@@ -240,7 +327,7 @@
       </div>
       <div class="meta-row">
         <div class="meta-label">Lugar, Fecha y hora de Emisión:</div>
-        <div class="meta-value">Cuernavaca, Mor.,<br>2026-11-27: 09:57</div>
+        <div class="meta-value">Cuernavaca, Mor.,<br>2026-11-20: 09:57</div>
       </div>
       <div class="meta-row">
         <div class="meta-label">UUID:</div>
@@ -278,57 +365,59 @@
   </div>
 
   <!-- Tabla de Conceptos y Totales -->
-  <table class="cfdi-table">
-    <thead>
-      <tr>
-        <th class="col-unidad">Unidad de<br>Medida</th>
-        <th class="col-prod">Productos y Servicios</th>
-        <th class="col-desc">Descripción</th>
-        <th class="col-cant">Cantidad</th>
-        <th class="col-pu">Precio Unitario</th>
-        <th class="col-imp">Importe</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="center-cell">XNA</td>
-        <td class="center-cell">01010101</td>
-        <td class="desc-cell">pago de comisión de departamento</td>
-        <td class="center-cell">1</td>
-        <td class="num-cell">66,645.98</td>
-        <td class="num-cell">66,645.98</td>
-      </tr>
-      <tr>
-        <td class="center-cell">XNA</td>
-        <td class="center-cell">01010101</td>
-        <td class="desc-cell">pago de comisión de departamento</td>
-        <td class="center-cell">1</td>
-        <td class="num-cell">1,354.02</td>
-        <td class="num-cell">1,354.02</td>
-      </tr>
-      <tr class="spacer-row">
-        <td colspan="6"></td>
-      </tr>
-      <tr class="sub-table-row">
-        <td colspan="5" class="total-label-cell">Subtotal</td>
-        <td class="num-cell">68,000.00</td>
-      </tr>
-      <tr class="sub-table-row">
-        <td colspan="5" class="total-label-cell">Total</td>
-        <td class="num-cell">68,000.00</td>
-      </tr>
-      <tr class="sub-table-row">
-        <td colspan="2" class="center-cell"><strong>Moneda:</strong> MXN</td>
-        <td class="center-cell"><strong>Total con Letra</strong></td>
-        <td colspan="3" style="padding-left: 8px;">SESENTA Y OCHO MIL / 00</td>
-      </tr>
-      <tr class="sub-table-row">
-        <td colspan="4" style="padding-left: 28px;"><strong>Forma de Pago:</strong> &nbsp;03 EFECTIVO VENTANILLA INFONAVIT</td>
-        <td class="total-label-cell"><strong>Método de Pago:</strong></td>
-        <td style="padding-left: 6px;">PUE</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-wrapper">
+    <table class="cfdi-table">
+      <thead>
+        <tr>
+          <th class="col-unidad">Unidad de<br>Medida</th>
+          <th class="col-prod">Productos y Servicios</th>
+          <th class="col-desc">Descripción</th>
+          <th class="col-cant">Cantidad</th>
+          <th class="col-pu">Precio Unitario</th>
+          <th class="col-imp">Importe</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="center-cell">XNA</td>
+          <td class="center-cell">01010101</td>
+          <td class="desc-cell">pago de comisión de departamento</td>
+          <td class="center-cell">1</td>
+          <td class="num-cell">66,645.98</td>
+          <td class="num-cell">66,645.98</td>
+        </tr>
+        <tr>
+          <td class="center-cell">XNA</td>
+          <td class="center-cell">01010101</td>
+          <td class="desc-cell">pago de comisión de departamento</td>
+          <td class="center-cell">1</td>
+          <td class="num-cell">1,354.02</td>
+          <td class="num-cell">1,354.02</td>
+        </tr>
+        <tr class="spacer-row">
+          <td colspan="6"></td>
+        </tr>
+        <tr class="sub-table-row">
+          <td colspan="5" class="total-label-cell">Subtotal</td>
+          <td class="num-cell">68,000.00</td>
+        </tr>
+        <tr class="sub-table-row">
+          <td colspan="5" class="total-label-cell">Total</td>
+          <td class="num-cell">68,000.00</td>
+        </tr>
+        <tr class="sub-table-row">
+          <td colspan="2" class="center-cell"><strong>Moneda:</strong> MXN</td>
+          <td class="center-cell"><strong>Total con Letra</strong></td>
+          <td colspan="3" style="padding-left: 8px;">SESENTA Y OCHO MIL / 00</td>
+        </tr>
+        <tr class="sub-table-row">
+          <td colspan="4" class="forma-pago-cell"><strong>Forma de Pago:</strong> &nbsp;03 EFECTIVO VENTANILLA INFONAVIT</td>
+          <td class="total-label-cell"><strong>Método de Pago:</strong></td>
+          <td style="padding-left: 6px;">PUE</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <!-- Sellos Digitales y Cadena Original (sin QR) -->
   <div class="seals-section">
